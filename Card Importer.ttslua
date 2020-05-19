@@ -1,15 +1,55 @@
 --By Amuzet
-mod_name='Card Importer'
-version=1.77
+mod_name='Card Importer - Branch Ray'
+version=0.1
 self.setName(mod_name..' '..version)
-author='76561198045776458'
-WorkshopID='https://steamcommunity.com/sharedfiles/filedetails/?id=1838051922'
+Originalauthor='76561198045776458'
+OriginalWorkshopID='https://steamcommunity.com/sharedfiles/filedetails/?id=1838051922'
 
 --[[Classes]]
-local TBL={__call=function(t,k)if k then return t[k] end return t.___ end,__index=function(t,k)if type(t.___)=='table'then rawset(t,k,t.___())else rawset(t,k,t.___)end return t[k] end}
-function TBL.new(d,t)if t then t.___=d return setmetatable(t,TBL)else return setmetatable(d,TBL)end end
+local TBL = {
+    __call = function(t,k)
+        if k then
+            return t[k]
+        end
+        return t.___
+    end ,
+    __index = function(t,k)
+        if type(t.___) == 'table' then
+            rawset(t,k,t.___())
+        else
+            rawset(t,k,t.___)
+        end
+        return t[k]
+     end }
 
-newText=setmetatable({type='3DText',position={0,2,0},rotation={90,0,0}},{__call=function(t,p,text,f)t.position=p local o=spawnObject(t);o.TextTool.setValue(text)o.TextTool.setFontSize(f or 50)return function(t)if t then o.TextTool.setValue(t)else o.destruct()end end end})
+function TBL.new(d,t)
+    if t then
+        t.___ = d
+        return setmetatable(t,TBL)
+    else
+        return setmetatable(d,TBL)
+    end
+end
+
+newText = setmetatable({
+    type = '3DText',
+    position = {0,2,0},
+    rotation = {90,0,0}
+},
+{
+    __call = function(t,p,text,f)
+        t.position = p
+        local o = spawnObject(t);
+        o.TextTool.setValue(text)
+        o.TextTool.setFontSize(f or 50)
+        return function(t)
+            if t then
+                o.TextTool.setValue(t)
+            else o.destruct()
+            end 
+        end
+    end
+})
 --[[Variables]]
 local Tick,Test,Quality,Back=0.2,false,TBL.new('normal',{}),TBL.new('https://i.stack.imgur.com/787gj.png',{})
 --[[Card Spawning Class]]
