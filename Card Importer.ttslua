@@ -31,7 +31,25 @@ function TBL.new(d,t)
     end
 end
 
-newText = setmetatable({type='3DText',position={0,2,0},rotation={90,0,0}},{__call=function(t,p,text,f)t.position=p local o=spawnObject(t);o.TextTool.setValue(text)o.TextTool.setFontSize(f or 50)return function(t)if t then o.TextTool.setValue(t)else o.destruct()end end end})
+newText = setmetatable({
+    type = '3DText',
+    position = {0,2,0},
+    rotation = {90,0,0}
+},
+{
+    __call = function(t,p,text,f)
+        t.position = p
+        local o = spawnObject(t);
+        o.TextTool.setValue(text)
+        o.TextTool.setFontSize(f or 50)
+        return function(t)
+            if t then
+                o.TextTool.setValue(t)
+            else o.destruct()
+            end 
+        end
+    end
+})
 --[[Variables]]
 local Tick,Test,Quality,Back=0.2,false,TBL.new('normal',{}),TBL.new('https://i.stack.imgur.com/787gj.png',{})
 --[[Card Spawning Class]]
